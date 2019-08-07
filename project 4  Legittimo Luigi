@@ -4,6 +4,7 @@ head(Words)
 
 # 2. ORDINO PAROLE DALLA A ALLA Z 
 Words<-apply(Words, 2, sort)
+
 # 3. CREO NUOVO CSV
 write.table(Words, file = "word.ordered.csv", sep = ";", quote = F, col.names = F)
 
@@ -13,9 +14,14 @@ apply(Words, 2, stri_stats_latex)
 #oppure
 apply((apply(Words,2,stri_count_words)), 2, sum)
 
+
 # 5. LUNGHEZZA MEDIA PAROLE
 fun.wordlength<-function(x) nchar(gsub(" ", "",x))
 mean(apply(Words, 2, fun.wordlength))
+# o stringa unica di codice
+mean(apply(Words, 2, (function(x) nchar(gsub(" ", "",x)))))
 #oppure
 fun.wordlength2<-function(x) stri_length(x) - stri_count_fixed(x, " ")
 mean(apply(Words, 2, fun.wordlength2))
+# o stringa unica di codice
+mean(apply(Words, 2, (function(x) stri_length(x)- stri_count_fixed(x, " "))))
