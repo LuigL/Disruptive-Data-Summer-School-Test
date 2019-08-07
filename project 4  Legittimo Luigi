@@ -18,10 +18,17 @@ apply((apply(Words,2,stri_count_words)), 2, sum)
 # 5. LUNGHEZZA MEDIA PAROLE
 fun.wordlength<-function(x) nchar(gsub(" ", "",x))
 mean(apply(Words, 2, fun.wordlength))
-# o stringa unica di codice
-mean(apply(Words, 2, (function(x) nchar(gsub(" ", "",x)))))
 #oppure
 fun.wordlength2<-function(x) stri_length(x) - stri_count_fixed(x, " ")
 mean(apply(Words, 2, fun.wordlength2))
-# o stringa unica di codice
-mean(apply(Words, 2, (function(x) stri_length(x)- stri_count_fixed(x, " "))))
+
+#OPPURE CODICE UNICO 
+Words<-read_excel("C:/Users/Luigi Legittimo/Desktop/Words.xlsx", range = "A1:A25", col_names = "Words", col_types = "text")
+code<-function(x) {
+  {assign("Words",(apply(x, 2, sort)))}
+  {print(Words)}
+  {print ((apply((apply(x,2,stri_count_words)), 2, sum)))}
+  {print((mean(apply(x, 2, (function(x) stri_length(x)- stri_count_fixed(x, " "))))))}
+  {write.table(Words, file = "word.ordered.csv", sep = ";", quote = F, col.names = F)}
+  }
+code(Words)
