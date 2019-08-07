@@ -1,0 +1,21 @@
+# 1. CARICO IL DOCUMENTO
+Words<-read_excel("C:/Users/Luigi Legittimo/Desktop/Words.xlsx", range = "A1:A25", col_names = "Words", col_types = "text")
+head(Words)
+
+# 2. ORDINO PAROLE DALLA A ALLA Z 
+Words<-apply(Words, 2, sort)
+# 3. CREO NUOVO CSV
+write.table(Words, file = "word.ordered.csv", sep = ";", quote = F, col.names = F)
+
+# 4. CONTEGGIO PAROLE
+#uso il pacchetto "stringi"
+apply(Words, 2, stri_stats_latex)
+#oppure
+apply((apply(Words,2,stri_count_words)), 2, sum)
+
+# 5. LUNGHEZZA MEDIA PAROLE
+fun.wordlength<-function(x) nchar(gsub(" ", "",x))
+mean(apply(Words, 2, fun.wordlength))
+#oppure
+fun.wordlength2<-function(x) stri_length(x) - stri_count_fixed(x, " ")
+mean(apply(Words, 2, fun.wordlength2))
